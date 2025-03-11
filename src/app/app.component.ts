@@ -5,7 +5,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { LoginComponent } from "./auth/component/login/login.component";
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NzLayoutModule, RouterLink, LoginComponent],
+  imports: [RouterOutlet, NzLayoutModule, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
