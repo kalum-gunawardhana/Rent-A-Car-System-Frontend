@@ -1,1 +1,14 @@
-<p>car-list-section works!</p>
+<section class="car-list-section">
+    <h2 class="title">🚗 Book Your Suitable Car</h2>
+
+    <div class="car-grid">
+        <nz-card *ngFor="let car of carList" [nzCover]="car.image">
+            <nz-card-meta [nzTitle]="car.model" [nzDescription]="'Price per day: $' + car.pricePerDay"></nz-card-meta>
+            <div class="car-actions">
+                <!-- <button nz-button nzType="primary" (click)="bookCar(car.id)">
+                    Book Now
+                </button> -->
+            </div>
+        </nz-card>
+    </div>
+</section>
