@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Component, NgModule, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, NgModel } from '@angular/forms';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -15,7 +16,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private http: HttpClient) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -34,11 +35,24 @@ export class SignupComponent implements OnInit {
   }
 
   submitSignupForm(): void {
-    if (this.signupForm.valid) {
-      console.log('Signup successful', this.signupForm.value);
-    } else {
-      console.log('Form is invalid');
+    if (this.signupForm.invalid) {
+      this.signupForm.markAllAsTouched();
+      return;
     }
+  
+    const formData = this.signupForm.value;
+  
+    this.http.post('http://localhost:8080/auth/signup', formData).subscribe({
+      next: (res) => {
+        console.log('Signup successful:', res);
+        // Optionally show a success toast or redirect
+        alert('Signup successful!');
+      },
+      error: (err) => {
+        console.error('Signup failed:', err);
+        // Optionally show an error message
+        alert('Signup failed. Please try again.');
+      }
+    });
   }
-
 }
